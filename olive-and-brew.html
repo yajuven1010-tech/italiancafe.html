@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Olive and Brew — Italian & Fusion Café · Bharuch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        olive: {
+          50:  '#f6f7f0',
+          100: '#eaecdc',
+          200: '#d4d8ba',
+          300: '#b8be8e',
+          400: '#9aa162',
+          500: '#7d8546',
+          600: '#636a36',
+          700: '#4d522b',
+          800: '#3e4224',
+          900: '#343820',
+        },
+        brew: {
+          50:  '#faf6f1',
+          100: '#f2e8d9',
+          200: '#e4cfb0',
+          300: '#d3b082',
+          400: '#c2915a',
+          500: '#b57840',
+          600: '#9c6234',
+          700: '#7e4c2c',
+          800: '#673f28',
+          900: '#563525',
+        },
+        cream: {
+          50:  '#fffdf7',
+          100: '#fef9ed',
+          200: '#fdf0d0',
+          300: '#fae3a8',
+        },
+      },
+      fontFamily: {
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        serif:   ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        sans:    ['"DM Sans"', 'sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  :root {
+    --olive-dark: #343820;
+    --olive-mid:  #636a36;
+    --brew-dark:  #563525;
+    --brew-mid:   #9c6234;
+    --cream:      #fef9ed;
+    --cream-dark: #fae3a8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--olive-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── Texture overlay ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── Scrollbar ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--olive-mid); border-radius: 3px; }
+
+  /* ─── NAV ─── */
+  #navbar {
+    transition: background 0.4s, box-shadow 0.4s;
+  }
+  #navbar.scrolled {
+    background: rgba(254,249,237,0.96) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 24px rgba(52,56,32,0.10);
+  }
+  .nav-link {
+    position: relative;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    color: var(--olive-dark);
+    transition: color 0.2s;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -3px;
+    width: 0; height: 2px;
+    background: var(--brew-mid);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover { color: var(--brew-mid); }
+  .nav-link:hover::after { width: 100%; }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(156,98,52,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(99,106,54,0.22) 0%, transparent 60%),
+      linear-gradient(160deg, #2c2e18 0%, #3e3218 35%, #4a3322 65%, #2a2515 100%);
+  }
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(254,249,237,0.06) 1px, transparent 0);
+    background-size: 32px 32px;
+  }
+  .hero-leaves {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .leaf {
+    position: absolute;
+    opacity: 0.07;
+    animation: leafFloat linear infinite;
+  }
+  @keyframes leafFloat {
+    0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+    10%  { opacity: 0.07; }
+    90%  { opacity: 0.07; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--brew-mid);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    box-shadow: 0 4px 18px rgba(156,98,52,0.35);
+    text-decoration: none;
+  }
+  .btn-primary:hover {
+    background: #7e4c2c;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(156,98,52,0.45);
+  }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: transparent;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    border-radius: 3px;
+    border: 1.5px solid rgba(255,255,255,0.45);
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    text-decoration: none;
+  }
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.8);
+    transform: translateY(-2px);
+  }
+
+  /* ─── RATING BADGE ─── */
+  .rating-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(250,227,168,0.15);
+    border: 1px solid rgba(250,227,168,0.35);
+    backdrop-filter: blur(8px);
+    border-radius: 50px;
+    padding: 0.45rem 1.1rem;
+    color: #fae3a8;
+    font-size: 0.88rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ─── SECTION TITLES ─── */
+  .section-eyebrow {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brew-mid);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--olive-dark);
+  }
+  .section-divider {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin: 1.2rem 0;
+  }
+  .section-divider span {
+    height: 1px;
+    background: var(--brew-mid);
+    opacity: 0.35;
+    flex: 1;
+    max-width: 60px;
+  }
+  .section-divider svg { color: var(--brew-mid); }
+
+  /* ─── FEATURE BADGES ─── */
+  .feature-card {
+    background: #fff;
+    border: 1px solid rgba(99,106,54,0.12);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 12px rgba(52,56,32,0.06);
+  }
+  .feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(52,56,32,0.12);
+  }
+  .feature-icon {
+    width: 60px; height: 60px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.8rem;
+  }
+
+  /* ─── MENU CARDS ─── */
+  .menu-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(52,56,32,0.07);
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s;
+    cursor: default;
+  }
+  .menu-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 48px rgba(52,56,32,0.14);
+  }
+  .menu-img {
+    width: 100%; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(52,56,32,0.22), transparent);
+  }
+  .menu-tag {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.22rem 0.7rem;
+    border-radius: 50px;
+    background: var(--brew-mid);
+    color: #fff;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .review-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 2rem;
+    box-shadow: 0 2px 16px rgba(52,56,32,0.07);
+    border: 1px solid rgba(99,106,54,0.08);
+    transition: box-shadow 0.3s;
+  }
+  .review-card:hover {
+    box-shadow: 0 12px 36px rgba(52,56,32,0.13);
+  }
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    line-height: 0.8;
+    color: var(--brew-mid);
+    opacity: 0.3;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* ─── SLIDER ─── */
+  .slider-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .slider-item { min-width: 100%; }
+  @media (min-width: 768px) {
+    .slider-item { min-width: calc(50% - 0.75rem); }
+  }
+  @media (min-width: 1024px) {
+    .slider-item { min-width: calc(33.333% - 1rem); }
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: linear-gradient(160deg, #2c2e18 0%, #3e3218 60%, #4a3322 100%);
+    color: rgba(254,249,237,0.85);
+  }
+  .footer-link {
+    color: rgba(254,249,237,0.6);
+    transition: color 0.2s;
+    text-decoration: none;
+    font-size: 0.88rem;
+  }
+  .footer-link:hover { color: var(--cream-dark); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+  .delay-5 { animation-delay: 0.7s; }
+
+  /* Scroll-reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── MAP PLACEHOLDER ─── */
+  .map-placeholder {
+    background: linear-gradient(135deg, #3e4224 0%, #4a3322 100%);
+    border-radius: 14px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(254,249,237,0.6);
+    gap: 0.75rem;
+    border: 1px solid rgba(254,249,237,0.1);
+  }
+
+  /* Mobile menu */
+  #mobile-menu {
+    transform: translateY(-100%);
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    display: block !important;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: rgba(254,249,237,0.97);
+    backdrop-filter: blur(16px);
+    z-index: 40;
+    padding: 1.5rem 2rem 2rem;
+    box-shadow: 0 8px 30px rgba(52,56,32,0.12);
+  }
+  #mobile-menu.open {
+    transform: translateY(0);
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--olive-dark);
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .info-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    background: rgba(254,249,237,0.08);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ NAVBAR -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: transparent;">
+  <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-2.5 group">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center text-lg" style="background: linear-gradient(135deg, #636a36, #9c6234);">🫒</div>
+      <div class="leading-tight">
+        <div class="font-display font-semibold text-base" style="color: var(--olive-dark); line-height:1.1;">Olive & Brew</div>
+        <div class="text-xs font-sans" style="color: var(--brew-mid); letter-spacing:0.06em;">BHARUCH</div>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#hero"       class="nav-link">Home</a>
+      <a href="#menu"       class="nav-link">Menu</a>
+      <a href="#about"      class="nav-link">About Us</a>
+      <a href="#contact"    class="nav-link">Contact</a>
+    </div>
+
+    <!-- Reserve CTA -->
+    <a href="tel:09081556777" class="hidden md:inline-flex btn-primary" style="padding: 0.6rem 1.4rem; font-size: 0.78rem;">
+      📞 Call Now
+    </a>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="hamburger md:hidden flex flex-col gap-1.5 p-1" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu">
+    <div class="flex flex-col gap-4">
+      <a href="#hero"    class="nav-link text-base py-1" onclick="closeMobile()">Home</a>
+      <a href="#menu"    class="nav-link text-base py-1" onclick="closeMobile()">Menu</a>
+      <a href="#about"   class="nav-link text-base py-1" onclick="closeMobile()">About Us</a>
+      <a href="#contact" class="nav-link text-base py-1" onclick="closeMobile()">Contact</a>
+      <a href="tel:09081556777" class="btn-primary mt-2 justify-center">📞 09081 56777</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-leaves" id="leaves-container"></div>
+
+  <div class="max-w-6xl mx-auto px-5 py-28 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+
+    <!-- Text -->
+    <div>
+      <!-- Rating badge -->
+      <div class="fade-up delay-1 mb-6">
+        <span class="rating-badge">
+          <span style="color:#fbbf24; font-size:1rem;">★</span>
+          <span>4.3 · 903+ Reviews on Google</span>
+        </span>
+      </div>
+
+      <p class="fade-up delay-1 section-eyebrow" style="color: rgba(250,227,168,0.7);">Italian & Fusion Café · Bharuch</p>
+
+      <h1 class="fade-up delay-2 font-display font-bold leading-tight mb-4"
+          style="font-size: clamp(2.4rem, 7vw, 4.2rem); color: #fef9ed;">
+        Welcome to<br/>
+        <em style="color: #fae3a8;">Olive and Brew</em>
+      </h1>
+
+      <p class="fade-up delay-3 font-sans text-lg mb-8 leading-relaxed" style="color: rgba(254,249,237,0.72); max-width: 480px;">
+        Delicious Italian &amp; Fusion Street Food in Bharuch — where every bite tells a story of flavour, warmth, and craft.
+      </p>
+
+      <div class="fade-up delay-4 flex flex-wrap gap-3">
+        <a href="#menu"    class="btn-primary">🍕 View Menu</a>
+        <a href="tel:09081556777" class="btn-outline">🛵 Order Online</a>
+      </div>
+
+      <!-- Tags -->
+      <div class="fade-up delay-5 flex flex-wrap gap-2 mt-8">
+        <span class="rating-badge text-sm" style="color: rgba(250,227,168,0.85);">🍽️ All You Can Eat</span>
+        <span class="rating-badge text-sm" style="color: rgba(250,227,168,0.85);">🌿 Vegan Options</span>
+        <span class="rating-badge text-sm" style="color: rgba(250,227,168,0.85);">👨‍👩‍👧 Family Friendly</span>
+      </div>
+    </div>
+
+    <!-- Hero visual card -->
+    <div class="hidden md:flex justify-end fade-up delay-3">
+      <div class="relative">
+        <div style="width: 360px; height: 420px; background: linear-gradient(135deg, rgba(156,98,52,0.25), rgba(99,106,54,0.25)); border: 1px solid rgba(254,249,237,0.15); border-radius: 24px; backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2rem;">
+          <div style="font-size: 5rem; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));">🍕</div>
+          <div style="text-align: center;">
+            <div class="font-display text-2xl font-semibold" style="color: #fef9ed;">Today's Special</div>
+            <div class="font-sans text-sm mt-1" style="color: rgba(250,227,168,0.75);">Fantasy Pizza · 7 Inches</div>
+          </div>
+          <div style="width: 100%; height: 1px; background: rgba(254,249,237,0.12);"></div>
+          <div class="flex gap-4 text-center">
+            <div>
+              <div class="font-display text-2xl font-bold" style="color: #fae3a8;">11:30</div>
+              <div class="font-sans text-xs" style="color: rgba(254,249,237,0.55);">Opens at</div>
+            </div>
+            <div style="width:1px; background: rgba(254,249,237,0.12);"></div>
+            <div>
+              <div class="font-display text-2xl font-bold" style="color: #fae3a8;">10:30</div>
+              <div class="font-sans text-xs" style="color: rgba(254,249,237,0.55);">Closes at</div>
+            </div>
+            <div style="width:1px; background: rgba(254,249,237,0.12);"></div>
+            <div>
+              <div class="font-display text-2xl font-bold" style="color: #fae3a8;">₹200</div>
+              <div class="font-sans text-xs" style="color: rgba(254,249,237,0.55);">Per person</div>
+            </div>
+          </div>
+          <div class="font-sans text-xs text-center" style="color: rgba(254,249,237,0.45);">Daily · Jyoti Nagar, Bharuch</div>
+        </div>
+        <!-- Decorative dots -->
+        <div style="position: absolute; top: -16px; right: -16px; width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle, rgba(156,98,52,0.4), transparent); filter: blur(20px);"></div>
+        <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, rgba(99,106,54,0.4), transparent); filter: blur(24px);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 fade-up delay-5" style="animation: bounce 2s infinite;">
+    <div style="width: 28px; height: 44px; border: 1.5px solid rgba(254,249,237,0.3); border-radius: 14px; display: flex; justify-content: center; padding-top: 8px;">
+      <div style="width: 4px; height: 8px; background: rgba(254,249,237,0.5); border-radius: 2px; animation: scrollDot 1.8s infinite;"></div>
+    </div>
+  </div>
+</section>
+<style>
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
+@keyframes scrollDot { 0%,100%{transform:translateY(0); opacity:0.7} 50%{transform:translateY(8px); opacity:0.2} }
+</style>
+
+<!-- ═══════════════════════════════════════════════ FEATURES / HIGHLIGHTS -->
+<section id="about" style="background: #fff; padding: 5rem 0;">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center mb-12 reveal">
+      <span class="section-eyebrow">Why Guests Love Us</span>
+      <h2 class="section-title">The Olive &amp; Brew Experience</h2>
+      <div class="section-divider justify-center"><span></span><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg><span></span></div>
+      <p class="font-sans text-base leading-relaxed max-w-xl mx-auto" style="color: #7a7560;">More than a café — a destination for food lovers who crave authentic flavours in a warm, welcoming atmosphere.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="feature-card reveal">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #fae3a8, #f2e8d9);">🍽️</div>
+        <h3 class="font-display font-semibold text-xl mb-2" style="color: var(--olive-dark);">All You Can Eat</h3>
+        <p class="font-sans text-sm leading-relaxed" style="color: #7a7560;">Indulge without limits. Our all-you-can-eat spreads are crafted for hearty appetites and good company.</p>
+      </div>
+
+      <div class="feature-card reveal" style="transition-delay: 0.1s;">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #d4d8ba, #eaecdc);">🌿</div>
+        <h3 class="font-display font-semibold text-xl mb-2" style="color: var(--olive-dark);">Vegan Options Available</h3>
+        <p class="font-sans text-sm leading-relaxed" style="color: #7a7560;">Thoughtfully crafted plant-based dishes that don't compromise on taste or creativity — everyone is welcome here.</p>
+      </div>
+
+      <div class="feature-card reveal" style="transition-delay: 0.2s;">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #e4cfb0, #f2e8d9);">👨‍👩‍👧</div>
+        <h3 class="font-display font-semibold text-xl mb-2" style="color: var(--olive-dark);">Family Friendly</h3>
+        <p class="font-sans text-sm leading-relaxed" style="color: #7a7560;">High chairs available for little guests. A cozy, safe, and vibrant space the whole family will love.</p>
+      </div>
+
+      <div class="feature-card reveal" style="transition-delay: 0.05s;">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #fae3a8, #e4cfb0);">⭐</div>
+        <h3 class="font-display font-semibold text-xl mb-2" style="color: var(--olive-dark);">4.3 Star Rated</h3>
+        <p class="font-sans text-sm leading-relaxed" style="color: #7a7560;">Over 903 Google reviews speak for themselves. Our guests keep coming back for the food and the vibe.</p>
+      </div>
+
+      <div class="feature-card reveal" style="transition-delay: 0.15s;">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #d4d8ba, #b8be8e33);">🛵</div>
+        <h3 class="font-display font-semibold text-xl mb-2" style="color: var(--olive-dark);">Dine-In & Delivery</h3>
+        <p class="font-sans text-sm leading-relaxed" style="color: #7a7560;">Visit us at Jyoti Nagar or order online. The same great quality, delivered to your door.</p>
+      </div>
+
+      <div class="feature-card reveal" style="transition-delay: 0.25s;">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #9c62341a, #e4cfb0);">🕙</div>
+        <h3 class="font-display font-semibold text-xl mb-2" style="color: var(--olive-dark);">Open Daily</h3>
+        <p class="font-sans text-sm leading-relaxed" style="color: #7a7560;">We're here every day from 11:30 AM to 10:30 PM. Lunch, evening snacks, or a late dinner — always open.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MENU -->
+<section id="menu" style="background: var(--cream); padding: 5rem 0;">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center mb-12 reveal">
+      <span class="section-eyebrow">Signature Dishes</span>
+      <h2 class="section-title">Menu Highlights</h2>
+      <div class="section-divider justify-center"><span></span><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color: var(--brew-mid);"><circle cx="8" cy="8" r="4"/></svg><span></span></div>
+      <p class="font-sans text-base leading-relaxed max-w-xl mx-auto" style="color: #7a7560;">From classic Italian to bold fusion — every item on our menu is made with passion and the finest ingredients.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Pizza -->
+      <div class="menu-card reveal">
+        <div class="menu-img" style="background: linear-gradient(135deg, #3e3218, #7e4c2c);">🍕</div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-display font-semibold text-lg" style="color: var(--olive-dark);">Fantasy Pizza</h3>
+            <span class="menu-tag">Popular</span>
+          </div>
+          <p class="font-sans text-sm" style="color: #7a7560;">Our iconic 7-inch personal pizza with a perfectly crispy crust, house tomato sauce, and loaded toppings of your choice.</p>
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-display text-lg font-semibold" style="color: var(--brew-mid);">₹ 199+</span>
+            <span class="text-xs font-sans" style="color: #9aa162;">🍅 Italian</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pasta -->
+      <div class="menu-card reveal" style="transition-delay: 0.08s;">
+        <div class="menu-img" style="background: linear-gradient(135deg, #4d3322, #8b5e3c);">🍝</div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-display font-semibold text-lg" style="color: var(--olive-dark);">Ravioli &amp; Pink Pasta</h3>
+            <span class="menu-tag">Authentic Italian</span>
+          </div>
+          <p class="font-sans text-sm" style="color: #7a7560;">Handcrafted ravioli and our signature blush-hued pink pasta in a velvety tomato-cream sauce. Bella!</p>
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-display text-lg font-semibold" style="color: var(--brew-mid);">₹ 229+</span>
+            <span class="text-xs font-sans" style="color: #9aa162;">🇮🇹 Pasta</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nachos -->
+      <div class="menu-card reveal" style="transition-delay: 0.16s;">
+        <div class="menu-img" style="background: linear-gradient(135deg, #5e4a1a, #a07830);">🧀</div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-display font-semibold text-lg" style="color: var(--olive-dark);">Loaded Nachos</h3>
+            <span class="menu-tag">Crowd Favorite</span>
+          </div>
+          <p class="font-sans text-sm" style="color: #7a7560;">Crispy tortilla chips piled high with zesty house salsa, molten cheddar, jalapeños, and sour cream. Share if you dare!</p>
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-display text-lg font-semibold" style="color: var(--brew-mid);">₹ 179+</span>
+            <span class="text-xs font-sans" style="color: #9aa162;">🌮 Fusion</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mojito -->
+      <div class="menu-card reveal" style="transition-delay: 0.04s;">
+        <div class="menu-img" style="background: linear-gradient(135deg, #1e3a22, #3a6e42);">🍹</div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-display font-semibold text-lg" style="color: var(--olive-dark);">Green Apple Mojito</h3>
+            <span class="menu-tag" style="background: #3a6e42;">Refreshing</span>
+          </div>
+          <p class="font-sans text-sm" style="color: #7a7560;">Tangy Granny Smith apple, fresh mint, crushed ice, and a splash of soda. The perfect cool-down companion.</p>
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-display text-lg font-semibold" style="color: var(--brew-mid);">₹ 129+</span>
+            <span class="text-xs font-sans" style="color: #9aa162;">🍏 Mocktail</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brownie -->
+      <div class="menu-card reveal" style="transition-delay: 0.12s;">
+        <div class="menu-img" style="background: linear-gradient(135deg, #2a1a0e, #5c3a1e);">🍫</div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-display font-semibold text-lg" style="color: var(--olive-dark);">Sizzling Brownie</h3>
+            <span class="menu-tag" style="background: #5c3a1e;">Best Seller</span>
+          </div>
+          <p class="font-sans text-sm" style="color: #7a7560;">Warm dark chocolate brownie served sizzling hot, topped with a generous scoop of vanilla ice cream. Pure bliss.</p>
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-display text-lg font-semibold" style="color: var(--brew-mid);">₹ 149+</span>
+            <span class="text-xs font-sans" style="color: #9aa162;">🍨 Dessert</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Noodles -->
+      <div class="menu-card reveal" style="transition-delay: 0.2s;">
+        <div class="menu-img" style="background: linear-gradient(135deg, #2e3a1e, #556e32);">🍜</div>
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-display font-semibold text-lg" style="color: var(--olive-dark);">Hakka &amp; Paneer Chilly</h3>
+            <span class="menu-tag" style="background: #556e32;">Café Fusion</span>
+          </div>
+          <p class="font-sans text-sm" style="color: #7a7560;">Wok-tossed Hakka noodles paired with crispy golden paneer in a fiery Indo-Chinese sauce. Bold and irresistible.</p>
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-display text-lg font-semibold" style="color: var(--brew-mid);">₹ 189+</span>
+            <span class="text-xs font-sans" style="color: #9aa162;">🥢 Indo-Chinese</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-12 reveal">
+      <a href="tel:09081556777" class="btn-primary" style="background: var(--olive-mid); box-shadow: 0 4px 18px rgba(99,106,54,0.3);">
+        📋 View Full Menu &amp; Order
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ TESTIMONIALS -->
+<section id="reviews" style="background: #fff; padding: 5rem 0; overflow: hidden;">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center mb-12 reveal">
+      <span class="section-eyebrow">What Guests Say</span>
+      <h2 class="section-title">Loved by Food Lovers</h2>
+      <div class="section-divider justify-center"><span></span><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color: var(--brew-mid);"><circle cx="8" cy="8" r="4"/></svg><span></span></div>
+    </div>
+
+    <!-- Slider -->
+    <div class="relative overflow-hidden" id="slider-wrapper">
+      <div class="slider-track" id="slider-track">
+
+        <!-- Review 1 -->
+        <div class="slider-item">
+          <div class="review-card h-full">
+            <span class="quote-mark">"</span>
+            <p class="font-sans text-base leading-relaxed mb-5" style="color: #5a5640; font-style: italic;">"Food quality is very good — also the ambience! The whole setup is just so cozy and welcoming. One of the best cafés in Bharuch by far."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold" style="background: linear-gradient(135deg, #636a36, #9c6234); color: #fff;">RP</div>
+              <div>
+                <div class="font-sans font-medium text-sm" style="color: var(--olive-dark);">Ravi P.</div>
+                <div class="flex gap-0.5 mt-0.5">
+                  <span style="color:#fbbf24;">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="slider-item">
+          <div class="review-card h-full">
+            <span class="quote-mark">"</span>
+            <p class="font-sans text-base leading-relaxed mb-5" style="color: #5a5640; font-style: italic;">"Great spot for Nachos, Quesadillas, Bruschetta, and Pizza with friends. Every visit feels special. The staff is super friendly too!"</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold" style="background: linear-gradient(135deg, #9c6234, #636a36); color: #fff;">SM</div>
+              <div>
+                <div class="font-sans font-medium text-sm" style="color: var(--olive-dark);">Shruti M.</div>
+                <div class="flex gap-0.5 mt-0.5">
+                  <span style="color:#fbbf24;">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="slider-item">
+          <div class="review-card h-full">
+            <span class="quote-mark">"</span>
+            <p class="font-sans text-base leading-relaxed mb-5" style="color: #5a5640; font-style: italic;">"The Sizzling Brownie is an absolute must-try! Warm, gooey, and perfect with the ice cream. My kids absolutely loved it. Will definitely return."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold" style="background: linear-gradient(135deg, #7e4c2c, #4d522b); color: #fff;">AK</div>
+              <div>
+                <div class="font-sans font-medium text-sm" style="color: var(--olive-dark);">Anuj K.</div>
+                <div class="flex gap-0.5 mt-0.5">
+                  <span style="color:#fbbf24;">★★★★</span><span style="color:#d1d5db;">★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="slider-item">
+          <div class="review-card h-full">
+            <span class="quote-mark">"</span>
+            <p class="font-sans text-base leading-relaxed mb-5" style="color: #5a5640; font-style: italic;">"Loved the Green Apple Mojito and the Fantasy Pizza. The portions are generous and prices are very reasonable. 10/10 would recommend!"</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold" style="background: linear-gradient(135deg, #3a6e42, #636a36); color: #fff;">NB</div>
+              <div>
+                <div class="font-sans font-medium text-sm" style="color: var(--olive-dark);">Neha B.</div>
+                <div class="flex gap-0.5 mt-0.5">
+                  <span style="color:#fbbf24;">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="slider-item">
+          <div class="review-card h-full">
+            <span class="quote-mark">"</span>
+            <p class="font-sans text-base leading-relaxed mb-5" style="color: #5a5640; font-style: italic;">"Amazing Hakka Noodles and Paneer Chilly! The fusion menu is super unique for Bharuch. A hidden gem in Jyoti Nagar that deserves all the love."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold" style="background: linear-gradient(135deg, #5c3a1e, #9c6234); color: #fff;">KS</div>
+              <div>
+                <div class="font-sans font-medium text-sm" style="color: var(--olive-dark);">Karan S.</div>
+                <div class="flex gap-0.5 mt-0.5">
+                  <span style="color:#fbbf24;">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Slider controls -->
+    <div class="flex items-center justify-center gap-4 mt-8">
+      <button id="prev-btn" onclick="slideReviews(-1)" class="w-10 h-10 rounded-full border flex items-center justify-center transition-all hover:shadow-md" style="border-color: var(--brew-mid); color: var(--brew-mid);" aria-label="Previous">
+        ←
+      </button>
+      <div id="slider-dots" class="flex gap-2"></div>
+      <button id="next-btn" onclick="slideReviews(1)" class="w-10 h-10 rounded-full border flex items-center justify-center transition-all hover:shadow-md" style="border-color: var(--brew-mid); color: var(--brew-mid);" aria-label="Next">
+        →
+      </button>
+    </div>
+
+    <!-- Overall rating -->
+    <div class="mt-10 p-6 rounded-2xl text-center reveal" style="background: linear-gradient(135deg, #f6f7f0, #fef9ed); border: 1px solid rgba(99,106,54,0.12);">
+      <div class="font-display text-5xl font-bold mb-1" style="color: var(--olive-dark);">4.3</div>
+      <div class="flex justify-center gap-1 mb-2"><span style="color:#fbbf24; font-size:1.4rem;">★★★★</span><span style="color:#fbbf24; font-size:1.4rem; opacity:0.5;">★</span></div>
+      <div class="font-sans text-sm" style="color: #7a7560;">Based on 903+ verified Google Reviews</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ CONTACT & FOOTER -->
+<footer id="contact">
+  <div class="max-w-6xl mx-auto px-5 py-16">
+
+    <!-- Top grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-14">
+
+      <!-- Brand -->
+      <div class="lg:col-span-1">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-11 h-11 rounded-full flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #636a36, #9c6234);">🫒</div>
+          <div>
+            <div class="font-display font-semibold text-xl" style="color: #fef9ed;">Olive &amp; Brew</div>
+            <div class="text-xs font-sans" style="color: rgba(250,227,168,0.6); letter-spacing:0.08em;">ITALIAN & FUSION CAFÉ</div>
+          </div>
+        </div>
+        <p class="font-sans text-sm leading-relaxed mb-5" style="color: rgba(254,249,237,0.55);">Where Italian craft meets global flavours. A cozy corner for food lovers in the heart of Bharuch, Gujarat.</p>
+        <div class="flex gap-3">
+          <span class="rating-badge text-xs" style="color: rgba(250,227,168,0.85);">⭐ 4.3 Google</span>
+          <span class="rating-badge text-xs" style="color: rgba(250,227,168,0.85);">903+ Reviews</span>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h4 class="font-display font-semibold text-lg mb-5" style="color: #fef9ed;">Get In Touch</h4>
+
+        <div class="flex flex-col gap-4">
+          <div class="flex items-start gap-3">
+            <div class="info-icon">📍</div>
+            <div>
+              <div class="font-sans text-xs mb-1" style="color: rgba(250,227,168,0.55); letter-spacing:0.08em; text-transform: uppercase;">Address</div>
+              <a href="https://maps.app.goo.gl/example" target="_blank" class="footer-link leading-snug">402, Mabel Square, Zadeshwar Rd,<br/>opp. Cafe Coffee Day, Jyoti Nagar,<br/>Bharuch, Gujarat 392012</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="info-icon">📞</div>
+            <div>
+              <div class="font-sans text-xs mb-1" style="color: rgba(250,227,168,0.55); letter-spacing:0.08em; text-transform: uppercase;">Phone</div>
+              <a href="tel:09081556777" class="footer-link text-base font-medium" style="color: #fae3a8;">090815 56777</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="info-icon">🕙</div>
+            <div>
+              <div class="font-sans text-xs mb-1" style="color: rgba(250,227,168,0.55); letter-spacing:0.08em; text-transform: uppercase;">Hours</div>
+              <div class="footer-link">Opens Daily</div>
+              <div class="font-sans font-semibold" style="color: #fae3a8;">11:30 AM – 10:30 PM</div>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <div class="info-icon">💰</div>
+            <div>
+              <div class="font-sans text-xs mb-1" style="color: rgba(250,227,168,0.55); letter-spacing:0.08em; text-transform: uppercase;">Price Range</div>
+              <div class="font-sans font-semibold text-base" style="color: #fae3a8;">₹200 – ₹400 per person</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map placeholder -->
+      <div>
+        <h4 class="font-display font-semibold text-lg mb-5" style="color: #fef9ed;">Find Us</h4>
+        <div class="map-placeholder">
+          <span style="font-size: 2.5rem;">🗺️</span>
+          <div class="font-display font-semibold" style="color: rgba(254,249,237,0.7);">Olive &amp; Brew</div>
+          <div class="font-sans text-xs text-center px-4" style="color: rgba(254,249,237,0.4);">402, Mabel Square, Zadeshwar Rd, Bharuch</div>
+          <a href="https://maps.google.com/?q=402+Mabel+Square+Zadeshwar+Rd+Bharuch+Gujarat" target="_blank"
+             class="btn-primary mt-2" style="padding: 0.55rem 1.4rem; font-size: 0.75rem; background: rgba(156,98,52,0.7);">
+            Open in Google Maps →
+          </a>
+        </div>
+        <!-- If embedding real map, replace the above div with:
+        <iframe src="YOUR_GOOGLE_MAPS_EMBED_URL" width="100%" height="280" style="border:0; border-radius:14px;" allowfullscreen loading="lazy"></iframe>
+        -->
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="height: 1px; background: rgba(254,249,237,0.08); margin-bottom: 2rem;"></div>
+
+    <!-- Bottom bar -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="font-sans text-xs" style="color: rgba(254,249,237,0.35);">© 2025 Olive and Brew. All rights reserved. · Bharuch, Gujarat.</p>
+      <div class="flex gap-6">
+        <a href="#hero"    class="footer-link">Home</a>
+        <a href="#menu"    class="footer-link">Menu</a>
+        <a href="#about"   class="footer-link">About</a>
+        <a href="#contact" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════ SCRIPTS -->
+<script>
+// ─── Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ─── Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+});
+function closeMobile() {
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+}
+
+// ─── Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => io.observe(el));
+
+// ─── Floating leaves
+const leavesContainer = document.getElementById('leaves-container');
+const leafEmojis = ['🫒','🌿','🍃','🌱'];
+function createLeaf() {
+  const leaf = document.createElement('div');
+  leaf.classList.add('leaf');
+  leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+  leaf.style.left = Math.random() * 100 + 'vw';
+  leaf.style.fontSize = (14 + Math.random() * 24) + 'px';
+  leaf.style.animationDuration = (18 + Math.random() * 20) + 's';
+  leaf.style.animationDelay = (Math.random() * 15) + 's';
+  leavesContainer.appendChild(leaf);
+  setTimeout(() => leaf.remove(), 38000);
+}
+for (let i = 0; i < 10; i++) createLeaf();
+setInterval(createLeaf, 3500);
+
+// ─── Testimonial Slider
+const track = document.getElementById('slider-track');
+const dotsContainer = document.getElementById('slider-dots');
+let currentSlide = 0;
+
+// Count visible items
+function getVisible() {
+  const w = window.innerWidth;
+  if (w >= 1024) return 3;
+  if (w >= 768) return 2;
+  return 1;
+}
+
+const totalItems = track.children.length;
+
+function buildDots() {
+  dotsContainer.innerHTML = '';
+  const total = Math.ceil(totalItems / getVisible());
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('button');
+    d.style.cssText = `width:8px; height:8px; border-radius:50%; border:none; cursor:pointer; transition:all .3s; background:${i===currentSlide ? 'var(--brew-mid)' : 'rgba(99,106,54,0.25)'}; transform:${i===currentSlide?'scale(1.3)':'scale(1)'}`;
+    d.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(d);
+  }
+}
+
+function goTo(n) {
+  const total = Math.ceil(totalItems / getVisible());
+  currentSlide = Math.max(0, Math.min(n, total - 1));
+  const pct = getVisible() === 1 ? currentSlide * 100 : currentSlide * (100 / getVisible());
+  track.style.transform = `translateX(-${pct}%)`;
+  buildDots();
+}
+
+window.slideReviews = function(dir) { goTo(currentSlide + dir); };
+
+buildDots();
+window.addEventListener('resize', () => { goTo(0); });
+
+// Auto-advance
+setInterval(() => {
+  const total = Math.ceil(totalItems / getVisible());
+  goTo((currentSlide + 1) % total);
+}, 5000);
+
+// Swipe support
+let touchStartX = 0;
+track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+track.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) slideReviews(diff > 0 ? 1 : -1);
+});
+</script>
+</body>
+</html>
